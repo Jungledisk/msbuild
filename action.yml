@@ -2,23 +2,25 @@ name: 'Build Project'
 description: 'Build a csproj file with pubxml settings'
 inputs:
   csproj:
-    description: 'Relative path to the csproj file to build'
+    description: Relative path to the csproj file to build
     required: true
   pubxml:
-    description: 'Relative path to the pubxml file'
+    description: Relative path to the pubxml file
     required: true
   configuration:
-    description: 'Debug (default) or Release'
+    description: Debug (default) or Release
     required: false
-    default: 'Debug'
+    default: Debug
 outputs:
   package:
-    description: 'The resulting package'
+    description: The resulting package
     value: ${{ steps.msbuild.outputs.package-path }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Paket Restore
       run: .paket\paket restore
+      shell: pwsh
     - id: msbuild
-    - run: ${{ github.action_path }}/build.ps1 -Csproj ${{ csproj }} -PublishProfile ${{ pubxml }} -Configuration ${{ configuration }}
+      run: ${{ github.action_path }}/build.ps1 -Csproj ${{ inputs.csproj }} -PublishProfile ${{ inputs.pubxml }} -Configuration ${{ inputs.configuration }}
+      shell: pwsh
