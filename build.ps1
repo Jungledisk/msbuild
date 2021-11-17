@@ -8,7 +8,7 @@ param (
 $msbuild = vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\\**\\Bin\\MSBuild.exe
 
 &$msbuild /p:DeployOnBuild=true `
-        /p:PublishProfile="$(Get-Location)/Web/Properties/PublishProfiles/$PublishProfile.pubxml" `
+        /p:PublishProfile="$(Split-Path -Resolve $Csproj)/Properties/PublishProfiles/$PublishProfile.pubxml" `
         /p:Configuration=$Configuration `
         $Csproj | Tee-Object -Variable buildLog
 
