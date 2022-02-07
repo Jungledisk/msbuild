@@ -7,6 +7,8 @@ param (
 
 $msbuild = vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\\**\\Bin\\MSBuild.exe
 
+&$msbuild -t:restore $Csproj
+
 &$msbuild /p:DeployOnBuild=true `
         /p:PublishProfile="$(Split-Path -Resolve $Csproj)/Properties/PublishProfiles/$PublishProfile.pubxml" `
         /p:Configuration=$Configuration `

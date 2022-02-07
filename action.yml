@@ -18,9 +18,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Paket Restore
-      run: .paket\paket restore
-      shell: pwsh
     - id: msbuild
       run: ${{ github.action_path }}/build.ps1 -Csproj ${{ inputs.csproj }} -PublishProfile ${{ inputs.pubxml }} -Configuration ${{ inputs.configuration }}
       shell: pwsh
